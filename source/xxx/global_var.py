@@ -50,3 +50,5 @@ vn_top_50 = [
 ,"VGC"
 ,"HCM"
 ]
+
+data_path = "C:/Users/tung.nguyen/Desktop/0 Project/stock/"

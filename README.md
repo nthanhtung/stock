@@ -1,30 +1,41 @@
 
 ---------
 
-use case
+# use case
 
-stock scan based on signal:
-	technical analysis
-	fundamental analysis
+## stock scan based on signal:
+	* technical analysis
+	* fundamental analysis
 
-stock correlation with relevant commodity:
-    HPG with steel
-    PNJ with gold
-    PVS with VNindex
+## stock correlation with relevant commodity:
+    * HPG with steel
+    * PNJ with gold
+    * PVS with VNindex
 
 data source
-    https://www.cophieu68.vn/export.php
-    https://finfoapi-hn.vndirect.com.vn/stocks/adPrice?symbols=HOSE&fromDate=2015-01-01&toDate=2021-05-31
-    https://finfo-api.vndirect.com.vn/v3/stocks/financialStatement?secCodes=VNM&fromDate=2017-06-30&toDate=2019-06-30
+    https://www.cophieu68.vn/export.php <br />
+    https://finfoapi-hn.vndirect.com.vn/stocks/adPrice?symbols=HOSE&fromDate=2015-01-01&toDate=2021-05-31 <br />
+    https://finfo-api.vndirect.com.vn/v3/stocks/financialStatement?secCodes=VNM&fromDate=2017-06-30&toDate=2019-06-30 <br />
+
+
+    stock price hourly last 5 day <br />
+    https://dchart-api.vndirect.com.vn/dchart/history?resolution=5&symbol=VNM&from=1620000000&to=1622893022 <br />
+
+
+    financial data year end, quarter end <br /> 
+    https://finfo-api.vndirect.com.vn/v3/stocks/balanceSheet?secCodes=VNM&fromDate=2019-01-01&toDate=2019-12-31 <br />
+    https://finfo-api.vndirect.com.vn/v3/stocks/financialStatement?secCodes=VNM&reportTypes=QUARTER&fromDate=2017-06-30&toDate=2019-06-30 <br />
+
+    stock price daily: https://finfoapi-hn.vndirect.com.vn/stocks/adPrice?symbols=VNM&fromDate=2015-01-01&toDate=2021-05-31 <br />
 
 example template
-    https://github.com/wilsonfreitas/awesome-quant
-    https://pypi.org/project/finance-calculator/
-    https://indzara.com/stock-market-templates/
-    https://stackoverflow.com/questions/39501277/efficient-python-pandas-stock-beta-calculation-on-many-dataframes
+    https://github.com/wilsonfreitas/awesome-quant <br />
+    https://pypi.org/project/finance-calculator/ <br />
+    https://indzara.com/stock-market-templates/ <br />
+    https://stackoverflow.com/questions/39501277/efficient-python-pandas-stock-beta-calculation-on-many-dataframes <br />
 ---------
 
-E
+# E
 	get data 20 y 1 shot
 	get data this y daily
 	VN data: higher prority
@@ -36,7 +47,7 @@ E
         Comodity price
 
 
-T
+# T
 	technical analysis
 	fundamental analysis
     benchmark analysis:
@@ -46,12 +57,12 @@ T
     stock correlation with relevant commodity
 	
 
-L
+# L
 	write semantic layer data to yearly file
 
 -------
 
-design
+# design
 
 text
 diagram
@@ -79,7 +90,7 @@ market gap in stock trading analysis tool
 
 
 ---------
-Discounted cash flow (DCF) valuation views the intrinsic value of a security
+# Discounted cash flow (DCF) valuation views the intrinsic value of a security
     cash flows actually paid to stockholders
         dividend discount model (DDM)
     cash flows available for distribution to shareholders
@@ -101,7 +112,7 @@ Discounted cash flow (DCF) valuation views the intrinsic value of a security
 
 
 
-Calculation
+# Calculation
 
 FCFF = CFO + Int(1 – Tax rate) – FCInv.
 

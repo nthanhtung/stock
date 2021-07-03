@@ -6,13 +6,13 @@ import glob
 def csv_path_to_df(path):
     all_files = glob.glob(path + "/*.csv")
 
-    li = []
+    l = []
 
     for filename in all_files:
         df = pd.read_csv(filename, index_col=None, header=0)
-        li.append(df)
+        l.append(df)
 
-    frame = pd.concat(li, axis=0, ignore_index=True)
+    frame = pd.concat(l, axis=0, ignore_index=True)
     return frame
 
 
