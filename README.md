@@ -13,6 +13,7 @@
 * PVS with VNindex
 
 # data source
+
 data source <br />
 https://www.cophieu68.vn/export.php <br />
 https://finfoapi-hn.vndirect.com.vn/stocks/adPrice?symbols=HOSE&fromDate=2015-01-01&toDate=2021-05-31 <br />
@@ -25,12 +26,14 @@ https://finfo-api.vndirect.com.vn/v3/stocks/financialStatement?secCodes=VNM&repo
 stock price daily: https://finfoapi-hn.vndirect.com.vn/stocks/adPrice?symbols=VNM&fromDate=2015-01-01&toDate=2021-05-31 <br />
 
 # example template
+
 example template <br />
+
 https://github.com/wilsonfreitas/awesome-quant <br />
 https://pypi.org/project/finance-calculator/ <br />
 https://indzara.com/stock-market-templates/ <br />
 https://stackoverflow.com/questions/39501277/efficient-python-pandas-stock-beta-calculation-on-many-dataframes <br />
----------
+
 
 # E
 	get data 20 y 1 shot
