@@ -12,7 +12,8 @@
 * PNJ with gold
 * PVS with VNindex
 
-data source
+# data source
+data source <br />
 https://www.cophieu68.vn/export.php <br />
 https://finfoapi-hn.vndirect.com.vn/stocks/adPrice?symbols=HOSE&fromDate=2015-01-01&toDate=2021-05-31 <br />
 https://finfo-api.vndirect.com.vn/v3/stocks/financialStatement?secCodes=VNM&fromDate=2017-06-30&toDate=2019-06-30 <br />
@@ -23,7 +24,8 @@ https://finfo-api.vndirect.com.vn/v3/stocks/balanceSheet?secCodes=VNM&fromDate=2
 https://finfo-api.vndirect.com.vn/v3/stocks/financialStatement?secCodes=VNM&reportTypes=QUARTER&fromDate=2017-06-30&toDate=2019-06-30 <br />
 stock price daily: https://finfoapi-hn.vndirect.com.vn/stocks/adPrice?symbols=VNM&fromDate=2015-01-01&toDate=2021-05-31 <br />
 
-example template
+# example template
+example template <br />
 https://github.com/wilsonfreitas/awesome-quant <br />
 https://pypi.org/project/finance-calculator/ <br />
 https://indzara.com/stock-market-templates/ <br />
