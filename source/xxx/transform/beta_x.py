@@ -3,8 +3,9 @@ import numpy as np
 import xxx.load.to_df as td
 from numpy.lib.stride_tricks import as_strided as stride
 import pandas as pd
+from pandas import DataFrame
 
-def roll(df, w, list_date_to_filter, **kwargs):
+def roll(df: DataFrame, sliding_window: int = 26, list_date_to_filter: list = [], **kwargs) -> None:
     '''
     Roll Function
     Returns groupby object ready to apply custom functions
@@ -13,11 +14,11 @@ def roll(df, w, list_date_to_filter, **kwargs):
     d0, d1 = v.shape
     s0, s1 = v.strides
 
-    a = stride(v, (d0 - (w - 1), w, d1), (s0, s0, s1))
+    a = stride(v, (d0 - (sliding_window - 1), sliding_window, d1), (s0, s0, s1))
 
     rolled_df = pd.concat({
         row: pd.DataFrame(values, columns=df.columns)
-        for row, values in zip(df.index[(w-1):], a)
+        for row, values in zip(df.index[(sliding_window-1):], a)
     })  # create rolling/sliding window things
 
     rolled_df = rolled_df[rolled_df.index.isin(list_date_to_filter, level=0)] # filter date to avoid excess computation
@@ -25,7 +26,7 @@ def roll(df, w, list_date_to_filter, **kwargs):
     return rolled_df.groupby(level=0, **kwargs)
 
 
-def beta(df):
+def beta(df: DataFrame):
     '''
     Beta Function
     Use closed form solution of OLS regression
@@ -40,8 +41,14 @@ def beta(df):
     return pd.Series(b[1], df.columns[1:], name='Beta')
 
 
-def calculate_beta(data_path, list_date_to_filter, sliding_window):
-    df = td.csv_path_to_df(data_path + 'data\stock_price')
+def calculate_beta(data_path: str = "C:/stock/", list_date_to_filter: list = [], sliding_window: int = 26):
+    '''
+    calculate beta for whole market, input df structure
+    1st column: date
+    2nd column: market
+    3rd column onward: stock
+    '''        
+    df = td.csv_path_to_df(data_path + 'data/stock_price')
     df = df.pivot(index="tradingDate", columns="symbol", values="close")
     df = df[['^VNINDEX'] + list(df.columns)]
     betas = roll(df.pct_change().fillna(0), sliding_window, list_date_to_filter).apply(beta)

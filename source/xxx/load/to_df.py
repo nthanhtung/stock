@@ -3,7 +3,7 @@
 import pandas as pd
 import glob
 
-def csv_path_to_df(path):
+def csv_path_to_df(path: str = "C:/data"):
     all_files = glob.glob(path + "/*.csv")
 
     l = []

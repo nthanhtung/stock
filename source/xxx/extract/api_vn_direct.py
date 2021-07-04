@@ -5,11 +5,17 @@ import datetime as dt
 import xxx.global_var as gv
 
 class single_request():
-    def __init__(self, data_path, vn_top_50) -> None:
+    '''
+    You can inherit this class to develop nested api call
+    '''      
+    def __init__(self, data_path: str = "C:/stock/", vn_top_50: list = ["HPG", "VNM"]) -> None:
         self.data_path = data_path
         self.vn_top_50 = vn_top_50
 
     def get_stock_price(self, symbols : list = ["VNM", "HPG"], fromDate : str = "2010-01-01", toDate : str = "2010-12-31") -> list:
+        '''
+        Get stock price using vndirect api with 1 request
+        '''           
         stock_price = []
         job_log = []
         for symbol in symbols:
@@ -23,7 +29,10 @@ class single_request():
                 job_log = job_log + [{ "symbols" : symbol, "fromDate" : fromDate, "toDate" : toDate , "status":e, "ts": str(dt.datetime.utcnow()) }]
         return stock_price, job_log #list
 
-    def get_finance_data(self, symbols = ["VNM", "HPG"], fromDate = "2010-01-01", toDate = "2010-12-31", type = "quarter"):
+    def get_finance_data(self, symbols : list = ["VNM", "HPG"], fromDate : str = "2010-01-01", toDate : str = "2010-12-31", type : str = "quarter") -> None:
+        '''
+        Get finance info using vndirect api with 1 request
+        '''          
         finance_data = []
         job_log = []
 
@@ -44,6 +53,9 @@ class single_request():
         return finance_data, job_log #list
 
     def get_stock_list(self):
+        '''
+        Get stock meta data (dimension data) using vndirect api with 1 request
+        '''          
         url = "https://finfoapi-hn.vndirect.com.vn/stocks/"
         df = pd.DataFrame(re.get(url).json()['data'])
         df.to_csv(self.data_path + 'data/dim/stock.csv')
@@ -54,11 +66,14 @@ class mass_request(single_request):
     '''
     inherit class single_request
     '''
-    def __init__(self, data_path, vn_top_50) -> None:
+    def __init__(self, data_path: str = "C:/stock/", vn_top_50: list = ["HPG", "VNM"]) -> None:
         self.data_path = data_path
         self.vn_top_50 = vn_top_50
 
-    def get_stock_price_year_range(self, symbols = ["VNM", "HPG"], start_y = 2021, end_y = 2021):    
+    def get_stock_price_year_range(self, symbols: list = ["VNM", "HPG"], start_y: int = 2021, end_y: int = 2021) -> True:    
+        '''
+        use function get_stock_price multiple time to send multiple request
+        '''        
         date_range = u.generate_year_range(start_y, end_y)
         for i in range(len(date_range)):
             stock_price_full = []
@@ -77,7 +92,10 @@ class mass_request(single_request):
             print("done {}".format(date_range[i][0]))
         return True
 
-    def get_finance_data_year_range(self, symbols = ["VNM", "HPG"], start_y = 2021, end_y = 2021, type = "quarter"):    
+    def get_finance_data_year_range(self, symbols: list = ["VNM", "HPG"], start_y: int = 2021, end_y: int = 2021, type: str = "quarter") -> True:    
+        '''
+        use function get_finance_data multiple time to send multiple request
+        '''           
         date_range = u.generate_year_range(start_y, end_y)
         for i in range(len(date_range)):
             finance_data_full = []

@@ -1,6 +1,9 @@
 import pandas as pd
 
-def standardize_vn_index_data(data_path):
+def standardize_vn_index_data(data_path: str = "C:/stock/"):
+       '''
+       Standardize vnindex data from cophieu68 with format of vndirect api
+       '''           
        df_source = pd.read_csv(data_path + "data/cophieu68/excel_^vnindex.csv")
        df_source.columns
 
@@ -26,5 +29,3 @@ def standardize_vn_index_data(data_path):
        df_vnindex.to_csv(data_path + "data/stock_price/0-vnindex.csv")
        return True
 
-def xxx():
-       print("xxx")
