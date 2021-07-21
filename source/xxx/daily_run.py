@@ -1,4 +1,3 @@
-import shutil
 import xxx.extract.api_vn_direct as vd
 import xxx.global_var as gv
 import xxx.transform.beta_x as bt
@@ -6,6 +5,7 @@ import xxx.transform.vnindex as vni
 import xxx.extract.web_investing as wi
 import datetime as dt
 import xxx.extract.web_cophieu68 as cp
+import xxx.transform.tram_anh as xta
 from shutil import copyfile
 
 ############### get stock price & finance data from vn direct
@@ -39,3 +39,7 @@ vni.standardize_vn_index_data(gv.data_path)
 today = dt.datetime.now().strftime('%Y-%m-%d')
 x = bt.calculate_beta(gv.data_path, [today], 365)
 x.to_csv(gv.data_path + f"data/beta/stock_beta_new.csv")
+
+############### calculate ta
+calculate_ta = xta.tram_anh()
+calculate_ta.xxx(gv.vn_top_50[0:2], gv.data_path)
