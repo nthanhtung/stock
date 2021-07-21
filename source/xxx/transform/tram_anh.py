@@ -1,13 +1,13 @@
 from numpy import append
 import xxx.load.to_df as td
 import pandas as pd
-import pandas_ta as pta
+import pandas_ta as ta
 import datetime as dt
 import os
 
 class xxx_tram_anh():
     def __init__(self) -> None:
-        self.custom_strategy = pta.Strategy(
+        self.custom_strategy = ta.Strategy(
             name="Momo and Volatility",
             description="SMA 20,50, BBANDS, RSI, MACD and Volume SMA 20",
             ta=[
@@ -21,7 +21,7 @@ class xxx_tram_anh():
         )
         self.candle_pattern = ["doji", "shootingstar", "hammer", "hangingman", "eveningstar", "morningstar", "invertedhammer"]
 
-    def to_df(self, df_source, symbol_current):
+    def calculate_ta(self, df_source, symbol_current):
         try:
             print(f"----------start calculate ta for {symbol_current}---------")
             df_current = df_source[df_source["symbol"] == symbol_current]
@@ -42,6 +42,12 @@ class xxx_tram_anh():
             print(e)
         return df_current
 
+    def transform_df(self, df_before):
+        df_before["adj_close"] = df_before["close"]
+        df_before.set_index(pd.DatetimeIndex(df_before["tradingDate"]), inplace=True)
+        df_after = df_before.sort_index(ascending=True)        
+        return df_after
+
     def to_csv(self, symbol_list, data_path: str = "C:/stock/", history: bool = False):
         # type of calculation : history or current year
         year_current = dt.datetime.now().year
@@ -52,19 +58,17 @@ class xxx_tram_anh():
             df = pd.read_csv(data_path + 'data/stock_price' + f'/stock_price_{year_current}.csv')
             export_file_name = "new"
         # add new column to match the ta library
-        df["adj_close"] = df["close"]
-        df.set_index(pd.DatetimeIndex(df["tradingDate"]), inplace=True)
-        appended_data = list(map(lambda x: self.to_df(df_source=df, symbol_current=x), symbol_list))
+        df = self.transform_df(df)
+        appended_data = list(map(lambda x: self.calculate_ta(df_source=df, symbol_current=x), symbol_list))
         appended_data = pd.concat(appended_data)
         appended_data.to_csv(data_path + f"data/stock_ta/{export_file_name}.csv")
         return True
     
+    def append_csv_vnindex(self, data_path: str = "C:/stock/"):
+        df = pd.read_csv(data_path + 'data/stock_price' + f'/0-vnindex.csv')
+        df = self.transform_df(df)
+        vn_index_ta = self.calculate_ta(df_source = df, symbol_current= "^VNINDEX")
+        vn_index_ta.to_csv(data_path + "data/stock_ta/new.csv", mode="a", header=False)
+        return True        
+    
 
-
-class temp(): 
-    pass
-
-
-
-# xxx_ta = xxx_tram_anh()
-# xxx_ta.to_csv(["HPG", "VNM"], "C:/Users/tung.nguyen/Desktop/0 Project/stock/")

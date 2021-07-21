@@ -44,13 +44,6 @@ x.to_csv(gv.data_path + f"data/beta/stock_beta_new.csv")
 ############### calculate ta
 calculate_ta = xta.xxx_tram_anh()
 calculate_ta.to_csv(gv.vn_top_50, gv.data_path, history=False)
-
-################
-df_source = pd.read_csv("C:/Users/tung.nguyen/Desktop/0 Project/stock/data/stock_price/0-vnindex.csv")
-df_source["adj_close"] = df_source["close"]
-df_source.set_index(pd.DatetimeIndex(df_source["tradingDate"]), inplace=True)
-vn_index_ta = calculate_ta.to_df(df_source = df_source, symbol_current= "^VNINDEX")
-vn_index_ta.to_csv("C:/Users/tung.nguyen/Desktop/0 Project/stock/data/stock_ta/new.csv", mode="a", header=False)
-############
+calculate_ta.append_csv_vnindex(data_path= gv.data_path)
 
 # calculate_ta.to_csv(gv.vn_top_50, gv.data_path, history=True)
