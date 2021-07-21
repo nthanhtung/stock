@@ -6,6 +6,7 @@ import xxx.extract.web_investing as wi
 import datetime as dt
 import xxx.extract.web_cophieu68 as cp
 import xxx.transform.tram_anh as xta
+import pandas as pd
 from shutil import copyfile
 
 ############### get stock price & finance data from vn direct
@@ -41,5 +42,15 @@ x = bt.calculate_beta(gv.data_path, [today], 365)
 x.to_csv(gv.data_path + f"data/beta/stock_beta_new.csv")
 
 ############### calculate ta
-calculate_ta = xta.tram_anh()
-calculate_ta.xxx(gv.vn_top_50[0:2], gv.data_path)
+calculate_ta = xta.xxx_tram_anh()
+calculate_ta.to_csv(gv.vn_top_50, gv.data_path, history=False)
+
+################
+df_source = pd.read_csv("C:/Users/tung.nguyen/Desktop/0 Project/stock/data/stock_price/0-vnindex.csv")
+df_source["adj_close"] = df_source["close"]
+df_source.set_index(pd.DatetimeIndex(df_source["tradingDate"]), inplace=True)
+vn_index_ta = calculate_ta.to_df(df_source = df_source, symbol_current= "^VNINDEX")
+vn_index_ta.to_csv("C:/Users/tung.nguyen/Desktop/0 Project/stock/data/stock_ta/new.csv", mode="a", header=False)
+############
+
+# calculate_ta.to_csv(gv.vn_top_50, gv.data_path, history=True)
