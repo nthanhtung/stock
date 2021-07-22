@@ -3,7 +3,6 @@ import xxx.load.to_df as td
 import pandas as pd
 import pandas_ta as ta
 import datetime as dt
-import os
 
 class xxx_tram_anh():
     def __init__(self) -> None:
@@ -30,13 +29,19 @@ class xxx_tram_anh():
             # To run your "Custom Strategy"
             df_current.ta.strategy(self.custom_strategy)
             df_current.ta.cdl_pattern(name = self.candle_pattern, append = True)
-            # Add signal column
-            df_current["SIGNAL_SMA_20_X_SMA_50"] = df_current["SMA_20"] > df_current["SMA_50"]
-            df_current["SIGNAL_PRICE_X_BBU_20_SELL"] = df_current["close"] > df_current["BBU_20_2.0"]
-            df_current["SIGNAL_PRICE_X_BBL_20_BUY"] = df_current["close"] < df_current["BBL_20_2.0"]
-            df_current["SIGNAL_RSI_70_SELL"] = df_current["RSI_14"] > 70
-            df_current["SIGNAL_RSI_30_BUY"] = df_current["RSI_14"] < 30
+            df_current["VOLUME_VS_MA20"] = df_current["volume"]/df_current["VOLUME_SMA_20"]
             df_current["symbol"] = symbol_current
+            # Add signal column
+            df_current["X2 VOLUME SMA20"] = df_current["VOLUME_VS_MA20"] > 2
+            df_current["X1.5_VOLUME SMA20"] = df_current["VOLUME_VS_MA20"] > 1.5
+            df_current["X0.5_VOLUME SMA20"] = df_current["VOLUME_VS_MA20"] < -0.5
+            df_current["MA20 > MA50"] = df_current["SMA_20"] > df_current["SMA_50"]
+            df_current["PRICE > BBU20"] = df_current["close"] > df_current["BBU_20_2.0"]
+            df_current["PRICE < BBL20"] = df_current["close"] < df_current["BBL_20_2.0"]
+            df_current["RSI > 70"] = df_current["RSI_14"] > 70
+            df_current["RSI < 30"] = df_current["RSI_14"] < 30
+            df_current["MA20 X MA50"] = ta.cross(df_current.ta.sma(20), df_current.ta.sma(50), above=True)
+            df_current["MACD X 0"] = df_current["MACD_8_21_9"].between(-0.2,0.2)
             print("------------done---------")
         except Exception as e:
             print(e)
@@ -72,3 +77,10 @@ class xxx_tram_anh():
         return True        
     
 
+################
+# data_path = "C:/Users/tung.nguyen/Desktop/0 Project/stock/"
+# year_current = 2021
+# x = xxx_tram_anh()
+# df = pd.read_csv(data_path + 'data/stock_price' + f'/0-vnindex.csv')
+# df = x.transform_df(df_before=df)
+# df = x.calculate_ta(df, "^VNINDEX")

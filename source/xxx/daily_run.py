@@ -6,7 +6,6 @@ import xxx.extract.web_investing as wi
 import datetime as dt
 import xxx.extract.web_cophieu68 as cp
 import xxx.transform.tram_anh as xta
-import pandas as pd
 from shutil import copyfile
 
 ############### get stock price & finance data from vn direct
@@ -46,4 +45,5 @@ calculate_ta = xta.xxx_tram_anh()
 calculate_ta.to_csv(gv.vn_top_50, gv.data_path, history=False)
 calculate_ta.append_csv_vnindex(data_path= gv.data_path)
 
+# calculate_ta.to_csv(["HPG"], gv.data_path, history=False)
 # calculate_ta.to_csv(gv.vn_top_50, gv.data_path, history=True)
